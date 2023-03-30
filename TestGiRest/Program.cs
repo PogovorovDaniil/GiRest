@@ -1,12 +1,12 @@
 ﻿using GiRest;
 using Newtonsoft.Json;
 
-ApiManager apiManager = new ApiManager("https://deckofcardsapi.com/api");
-var newDeckResponse = apiManager.DoRequest<NewDeckResponse>("/deck/new/shuffle/", "GET", request: new NewDeckRequest() { deck_count = 1 });
+ApiService apiService = new ApiService("https://deckofcardsapi.com/api");
+var newDeckResponse = ApiService.DoRequest<NewDeckResponse>("/deck/new/shuffle/", "GET", request: new NewDeckRequest() { deck_count = 1 });
 var deckId = newDeckResponse.DeckId;
 Console.WriteLine(deckId);
 
-var drawResponse = apiManager.DoRequest<DrawResponse>($"/deck/{deckId}/draw/", "GET", request: new DrawRequest() { Count = 4 });
+var drawResponse = apiService.DoRequest<DrawResponse>($"/deck/{deckId}/draw/", "GET", request: new DrawRequest() { Count = 4 });
 Console.WriteLine(string.Join("\n", drawResponse.Cards.Select(c => c.Code + ": " + c.Image)));
 
 class NewDeckRequest

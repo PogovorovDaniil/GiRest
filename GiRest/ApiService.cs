@@ -3,13 +3,13 @@ using System.Net;
 
 namespace GiRest
 {
-    public class ApiManager
+    public class ApiService
     {
         private string apiUri;
         private string addRequestString;
         private object? addHeader;
 
-        public ApiManager(string apiUri, object? requestTemplate = null, object? headerTemplate = null)
+        public ApiService(string apiUri, object? requestTemplate = null, object? headerTemplate = null)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
