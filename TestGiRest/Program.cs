@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 
 ApiService apiService = new ApiService("https://deckofcardsapi.com/api");
-var newDeckResponse = ApiService.DoRequest<NewDeckResponse>("/deck/new/shuffle/", "GET", request: new NewDeckRequest() { deck_count = 1 });
+var newDeckResponse = apiService.DoRequest<NewDeckResponse>("/deck/new/shuffle/", "GET", request: new NewDeckRequest() { deck_count = 1 });
 var deckId = newDeckResponse.DeckId;
 Console.WriteLine(deckId);
 
