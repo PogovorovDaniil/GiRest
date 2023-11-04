@@ -26,7 +26,9 @@ namespace GiRest
                 $"?{addRequestString}" : 
                 $"{HttpRequestSerializer.SerializeObject(request)}&{addRequestString}";
 
+#pragma warning disable SYSLIB0014
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create($"{apiUri}{path}{requestString}");
+#pragma warning restore SYSLIB0014
             webRequest.Method = method;
             webRequest.Accept = "application/json";
             if (addHeader is not null)
@@ -80,7 +82,6 @@ namespace GiRest
         {
             HttpWebRequest webRequest = CreateRequest(path, method, request, data, header);
             string responseText = GetResponseString(webRequest, out HttpStatusCode statusCode);
-            string log = GetLogText(path, method, request, data, header, statusCode, responseText);
             switch (statusCode)
             {
                 case HttpStatusCode.OK:
@@ -90,6 +91,7 @@ namespace GiRest
                 case HttpStatusCode.PartialContent:
                     return JsonConvert.DeserializeObject<T>(responseText) ?? new T();
                 default:
+                    string log = GetLogText(path, method, request, data, header, statusCode, responseText);
                     throw new Exception(log);
             }
         }
@@ -97,7 +99,6 @@ namespace GiRest
         {
             HttpWebRequest webRequest = CreateRequest(path, method, request, data, header);
             string responseText = GetResponseString(webRequest, out HttpStatusCode statusCode);
-            string log = GetLogText(path, method, request, data, header, statusCode, responseText);
             switch (statusCode)
             {
                 case HttpStatusCode.OK:
@@ -107,6 +108,7 @@ namespace GiRest
                 case HttpStatusCode.PartialContent:
                     return;
                 default:
+                    string log = GetLogText(path, method, request, data, header, statusCode, responseText);
                     throw new Exception(log);
             }
         }
